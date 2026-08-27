@@ -20,9 +20,12 @@ default: &default
   max_connections: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 
+
 development:
   <<: *default
   database: billetto_rails_test_development
+  username: <%= Rails.application.credentials.db_username %>
+  password: <%= Rails.application.credentials.db_password %>
 
   # The specified database role being used to connect to PostgreSQL.
   # To create additional roles in PostgreSQL see `$ createuser --help`.
