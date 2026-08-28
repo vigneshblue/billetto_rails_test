@@ -1,0 +1,19 @@
+<h1>Events</h1>
+
+<% @events.each do |event| %>
+  <div>
+    <h2><%= event.title %></h2>
+    <p><%= event.description %></p>
+    <p><b>Start Date: </b><%= event.start_date %></p>
+    <%= image_tag event.image_url, style: "width:100px; height:100px" if event.image_url.present? %>
+    <%= link_to "View Event", event.event_url, target: "_blank" %>
+  </div>
+<% end %>
+
+<%== @pagy.series_nav %> 
+
+<style>
+  .series-nav > a {
+    margin-right: 5px;
+  }
+</style>
