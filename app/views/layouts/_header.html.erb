@@ -1,0 +1,41 @@
+<header class="navbar">
+  <div class="left">
+    <h2> Billetto Rails Test </h2>
+  </div>
+  <div class="right">
+    <% if clerk.session %>
+      <div id="user-button">
+      </div>
+    <% else %>
+      <%= link_to "Sign in", sign_in_path%>
+      <%= link_to "Sign up", sign_up_path%>
+    <% end %>
+  </div>
+</header>
+
+<script>
+  window.addEventListener('load', async function () {
+    await Clerk.load({
+      ui: { ClerkUI: window.__internal_ClerkUICtor },
+    })
+
+    if (Clerk.isSignedIn) {
+      const userButtonDiv = document.getElementById('user-button')
+
+      Clerk.mountUserButton(userButtonDiv)
+    }
+  })
+</script>
+
+<style>
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .right {
+    display: flex;
+    gap: 16px;
+  }
+</style>

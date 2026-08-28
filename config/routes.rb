@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  root "events#index"
+  get "/sign_up" => "clerk#sign_up"
+  get "/sign_in" => "clerk#sign_in"
+  get "/sign_out" => "clerk#sign_out"
   resources :events, only: [:index]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

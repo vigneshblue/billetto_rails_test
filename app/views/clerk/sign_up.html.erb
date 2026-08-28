@@ -1,0 +1,28 @@
+<div id="app">
+  <div id="sign-up">
+  </div>
+</div>
+<script>
+  window.addEventListener('load', async function () {
+    await Clerk.load({
+      ui: { ClerkUI: window.__internal_ClerkUICtor },
+    })
+
+    if (Clerk.isSignedIn) {
+      document.getElementById('app').innerHTML = `
+        <div id="user-button"></div>
+      `
+
+      const userButtonDiv = document.getElementById('user-button')
+
+      Clerk.mountUserButton(userButtonDiv)
+    } else {
+
+      const signUpDiv = document.getElementById('sign-up')
+
+      Clerk.mountSignUp(signUpDiv)
+    }
+  })
+</script>
+
+<%# user1+clerk_test@example.com | BillettoRailsTest | 424242 %>
