@@ -7,8 +7,14 @@ class ApplicationController < ActionController::Base
 
   include Clerk::Authenticatable
   include Pagy::Method
+  before_action :set_current_user
 
   private
+
+    def set_current_user
+      return unless clerk.session
+      @current_user = User.find_or_create_by!(clerk_user_id: clerk.user_id)
+    end
 
     def require_clerk_session!
       redirect_to clerk.sign_in_url unless clerk.session
