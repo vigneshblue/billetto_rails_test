@@ -7,7 +7,7 @@ class Billetto
     puts "fetching response"
     response = Faraday.new(
       url: url,
-      headers: { "accept": "application/json", "Api-Keypair": "BLT2KPC9HY67W4XE3YP1167XY:fgzQ68XMg5t29gCQfTDSJyuLJwdJzYKIB4m5Vl8fnqbTgpjrWP" },
+      headers: { "accept": "application/json", "Api-Keypair": Rails.application.credentials.billetto_api_keypair },
     ).get
 
     puts "fetched response"
