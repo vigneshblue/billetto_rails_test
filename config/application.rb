@@ -25,7 +25,7 @@ module BillettoRailsTest
     # config.eager_load_paths << Rails.root.join("extras")
 
     config.to_prepare do
-      Rails.configuration.event_store = RailsEventStore::Client.new
+      Rails.configuration.event_store = RailsEventStore::JSONClient.new
     end
   end
 end
