@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount RailsEventStore::Browser => '/res' if Rails.env.development?
   root "events#index"
   get "/sign_up" => "clerk#sign_up"
   get "/sign_in" => "clerk#sign_in"
