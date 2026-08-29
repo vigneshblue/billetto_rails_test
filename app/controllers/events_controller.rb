@@ -6,10 +6,24 @@ class EventsController < ApplicationController
     @pagy, @events = pagy(:offset, Event.all.ordered)
   end
 
-  def upvote    
+  def upvote
+    vote_event = EventUpvoted.new(
+      data:{ event_id: @event_id, user_id: @user_id }
+    )
+
+    Rails.configuration.event_store.publish(vote_event, stream_name: "Event$#{@event_id}")
+
+    redirect_back fallback_location: root_path, notice: "Upvoted successfully!"    
   end
 
   def downvote
+    vote_event = EventDownvoted.new(
+      data:{ event_id: @event_id, user_id: @user_id }
+    )
+    
+    Rails.configuration.event_store.publish(vote_event, stream_name: "Event$#{@event_id}")
+
+    redirect_back fallback_location: root_path, notice: "Downvoted successfully!"
   end
 
   private
