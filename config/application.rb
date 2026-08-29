@@ -23,5 +23,9 @@ module BillettoRailsTest
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    config.to_prepare do
+      Rails.configuration.event_store = RailsEventStore::Client.new
+    end
   end
 end
