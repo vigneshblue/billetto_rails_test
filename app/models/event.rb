@@ -5,10 +5,10 @@ class Event < ApplicationRecord
   scope :ordered, -> { order(start_date: :asc) }
 
   def upvotes_count
-    0
+    BillettoEvent.votes_count(event_id)[:upvotes]
   end
 
   def downvotes_count
-    0
+    BillettoEvent.votes_count(event_id)[:downvotes]
   end
 end
