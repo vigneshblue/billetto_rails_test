@@ -7,6 +7,12 @@
     <p><b>Start Date: </b><%= event.start_date %></p>
     <%= image_tag event.image_url, style: "width:100px; height:100px" if event.image_url.present? %>
     <%= link_to "View Event", event.event_url, target: "_blank" %>
+    <div class="vote">
+      <%= button_to "Upvote", upvote_event_path(event), method: :post %>
+      <span><%= event.upvotes_count %></span>
+      <%= button_to "Downvote", downvote_event_path(event), method: :post %>
+      <span><%= event.downvotes_count %></span>
+    </div>
   </div>
 <% end %>
 
@@ -15,5 +21,10 @@
 <style>
   .series-nav > a {
     margin-right: 5px;
+  }
+  .vote {
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 </style>
