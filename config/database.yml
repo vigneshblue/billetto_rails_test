@@ -60,6 +60,8 @@ development:
 test:
   <<: *default
   database: billetto_rails_test_test
+  username: <%= Rails.application.credentials.db_username %>
+  password: <%= Rails.application.credentials.db_password %>
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
