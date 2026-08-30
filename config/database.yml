@@ -92,6 +92,7 @@ test:
 production:
   primary: &primary_production
     <<: *default
+    url: <%= ENV['DATABASE_URL'] %>
     database: billetto_rails_test_production
     username: billetto_rails_test
     password: <%= ENV["BILLETTO_RAILS_TEST_DATABASE_PASSWORD"] %>
