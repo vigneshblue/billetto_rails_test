@@ -23,15 +23,15 @@ RSpec.describe Billetto::Client, type: :integration do
     let(:endpoint) { '/api/v3/public/events' }
     let(:api_response_body_1) do
       {
-        'data' => [{ 'id' => 'evt_1', 'title' => 'Concert' }],
+        'data' => [{ 'id' => 121212, 'title' => 'Concert' }],
         'has_more' => true,
-        'next' => 'evt_11'
+        'next' => 212121
       }.to_json
     end
 
     let(:api_response_body_2) do
       {
-        'data' => [{ 'id' => 'evt_1000', 'title' => 'Concert' }],
+        'data' => [{ 'id' => 101010, 'title' => 'Concert' }],
         'has_more' => false,
         'next' => nil
       }.to_json
@@ -48,26 +48,26 @@ RSpec.describe Billetto::Client, type: :integration do
 
       it 'queries the API with the limit parameter and returns parsed payload' do
         data, has_more = described_class.list_public_events(10)
-        expect(data).to eq([{ 'id' => 'evt_1', 'title' => 'Concert' }])
+        expect(data).to eq([{ 'id' => 121212, 'title' => 'Concert' }])
         expect(has_more).to be_in([true, false])
         expect(data.first['next']).to be_nil.or be_present
       end
     end
 
     context 'when a previous event exists in the database' do
-      let(:mock_event) { instance_double(Event, event_id: 'evt_999') }
+      let(:mock_event) { instance_double(Event, event_id: 292929) }
 
       before do
         allow(Event).to receive(:last).and_return(mock_event)
         stubs.get(endpoint) do |env|
-          expect(env.params).to eq('limit' => '100', 'after' => 'evt_999')
+          expect(env.params).to eq('limit' => '100', 'after' => '292929')
           [200, { 'Content-Type' => 'application/json' }, api_response_body_2]
         end
       end
 
       it 'appends the after parameter automatically to the API query' do
         data, has_more = described_class.list_public_events
-        expect(data.first['id']).to eq('evt_1000')
+        expect(data.first['id']).to eq(101010)
         expect(has_more).to be_in([true, false])
         expect(data.first['next']).to be_nil.or be_present
       end
