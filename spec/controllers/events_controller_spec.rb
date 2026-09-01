@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Events Management", type: :request do
+RSpec.describe "Events Management - Authenticated User", type: :request do
   let!(:mock_event) do
     Event.create!(
       event_id: 121212,
@@ -66,6 +66,43 @@ RSpec.describe "Events Management", type: :request do
 
       expect(response).to redirect_to('/previous_page')
       expect(flash[:notice]).to eq('Downvoted successfully!')
+    end
+  end
+end
+
+RSpec.describe "Events Management - Unauthenticated User", type: :request do
+  let!(:mock_event) do
+    Event.create!(
+      event_id: 121212,
+      title: 'Controller Test Concert',
+      start_date: Time.current
+    )
+  end
+
+  let(:clerk) { double("Clerk", session: nil, sign_in_url: ENV["CLERK_SIGN_IN_URL"]) }
+
+  before do
+    allow_any_instance_of(EventsController).to receive(:clerk).and_return(clerk)
+
+    allow(BillettoEvent).to receive(:upvote)
+    allow(BillettoEvent).to receive(:downvote)
+  end
+
+  describe 'POST /events/:id/upvote' do
+    it 'redirects to sign_in page' do
+      post upvote_event_path(mock_event)
+
+      expect(BillettoEvent).not_to have_received(:upvote)
+      expect(response).to redirect_to(clerk.sign_in_url)
+    end
+  end
+
+  describe 'POST /events/:id/downvote' do
+    it 'redirects to sign_in page' do
+      post downvote_event_path(mock_event)
+
+      expect(BillettoEvent).not_to have_received(:downvote)
+      expect(response).to redirect_to(clerk.sign_in_url)
     end
   end
 end
