@@ -45,10 +45,6 @@ https://billetto-rails-test.onrender.com/
 
 - **Testing:** I chose RSpec instead of Minitest because I find RSpec's descriptive syntax easier to read and understand, particularly for request and system tests.
 
-- **Event identity:** I assume each Billetto event has a unique `event_id`, which is used to identify and persist events locally.
-
-- **Vote behavior:** I assume a user can have only one effective vote per event. If a user votes again, their latest vote determines their current vote. Changing from an upvote to a downvote, or vice versa, changes the effective vote rather than counting both votes.
-
 - **Pagination:** Events are paginated to avoid loading the entire event collection into memory and to keep the listing responsive as the number of events grows.
 
 
