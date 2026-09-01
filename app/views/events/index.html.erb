@@ -9,9 +9,9 @@
     <%= link_to "View Event", event.event_url, target: "_blank" %>
     <div class="vote">
       <%= button_to "Upvote", upvote_event_path(event), method: :post %>
-      <span><%= event.upvotes_count %></span>
+      <span class="upvote-count"><%= event.upvotes_count %></span>
       <%= button_to "Downvote", downvote_event_path(event), method: :post %>
-      <span><%= event.downvotes_count %></span>
+      <span class="downvote-count"><%= event.downvotes_count %></span>
     </div>
   </div>
 <% end %>
