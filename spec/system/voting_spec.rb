@@ -21,7 +21,7 @@ RSpec.describe "Voting", type: :system do
 
       expect(page).to have_current_path(ENV["CLERK_SIGN_IN_URL"])
       expect(page).to have_css('.cl-signIn-root', wait: 10)
-      expect(page).to have_content("Sign in to billetto_rails_test") 
+      expect(page).to have_content("Sign in to billetto_rails_test")
     end
 
     it "redirects an unauthenticated user to sign in when clicking Downvote" do
@@ -31,7 +31,7 @@ RSpec.describe "Voting", type: :system do
 
       expect(page).to have_current_path(ENV["CLERK_SIGN_IN_URL"])
       expect(page).to have_css('.cl-signIn-root', wait: 10)
-      expect(page).to have_content("Sign in to billetto_rails_test") 
+      expect(page).to have_content("Sign in to billetto_rails_test")
     end
   end
 

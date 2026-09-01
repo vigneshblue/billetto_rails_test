@@ -1,5 +1,5 @@
 class Billetto::Events
-  def self.create events_arr
+  def self.create(events_arr)
     events_arr.each do |event|
       Event.find_or_initialize_by(event_id: event["id"]).tap do |e|
         e.title = event["title"]
@@ -12,7 +12,6 @@ class Billetto::Events
         unless e.save
           Rails.logger.error("Failed to sync Billetto event #{event['id']}: #{e.errors.full_messages.join(', ')}")
         end
-        
       end
     end
   end

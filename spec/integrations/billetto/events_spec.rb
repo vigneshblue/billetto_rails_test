@@ -49,7 +49,7 @@ RSpec.describe Billetto::Events, type: :model do
 
       it 'updates the attributes of the existing record' do
         described_class.create(events_arr)
-        
+
         existing_event.reload
         expect(existing_event.title).to eq('Rock Festival')
         expect(existing_event.country).to eq('Denmark')
@@ -69,7 +69,7 @@ RSpec.describe Billetto::Events, type: :model do
 
       it 'uses .dig to safely assign nil to the country without raising an exception' do
         expect { described_class.create(missing_location_arr) }.not_to raise_error
-        
+
         created_event = Event.find_by(event_id: 323232)
         expect(created_event.country).to be_nil
       end
@@ -79,9 +79,9 @@ RSpec.describe Billetto::Events, type: :model do
       before do
         # Simulating a validation failure on save by forcing an error onto the instance
         allow_any_instance_of(Event).to receive(:save).and_return(false)
-        
+
         # Stub errors to look like standard ActiveRecord model errors
-        errors_stub = double('Errors', full_messages: ['Title cannot be blank'])
+        errors_stub = double('Errors', full_messages: [ 'Title cannot be blank' ])
         allow_any_instance_of(Event).to receive(:errors).and_return(errors_stub)
       end
 

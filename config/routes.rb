@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
-  mount RailsEventStore::Browser => '/res' if Rails.env.development?
+  mount RailsEventStore::Browser => "/res" if Rails.env.development?
   root "events#index"
   get "/sign_up" => "clerk#sign_up"
   get "/sign_in" => "clerk#sign_in"
   get "/sign_out" => "clerk#sign_out"
-  resources :events, only: [:index] do
+  resources :events, only: [ :index ] do
     post :upvote, on: :member
     post :downvote, on: :member
   end

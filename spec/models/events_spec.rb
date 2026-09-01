@@ -23,7 +23,7 @@ RSpec.describe Event, type: :model do
     it 'enforces a uniqueness constraint on event_id' do
       # Persist an initial entry to test collision boundaries
       Event.create!(event_id: 111111, title: 'First Fest')
-      
+
       duplicate_event = Event.new(event_id: 111111, title: 'Second Fest')
       expect(duplicate_event).not_to be_valid
       expect(duplicate_event.errors[:event_id]).to include("has already been taken")
@@ -37,7 +37,7 @@ RSpec.describe Event, type: :model do
       let!(:middle_event) { Event.create!(event_id: 121212, title: 'Middle Event', start_date: Time.current) }
 
       it 'returns events sorted chronologically by start_date ascending' do
-        expect(Event.ordered).to eq([earlier_event, middle_event, later_event])
+        expect(Event.ordered).to eq([ earlier_event, middle_event, later_event ])
       end
     end
   end

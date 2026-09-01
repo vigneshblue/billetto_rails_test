@@ -12,7 +12,7 @@ RSpec.describe BillettoEvent, type: :model do
 
       # Read back from the stream to verify execution
       published_events = event_store.read.stream(stream_name).to_a
-      
+
       expect(published_events.count).to eq(1)
       expect(published_events.first).to be_an_instance_of(EventUpvoted)
       expect(published_events.first.data).to eq(event_id: event_id, user_id: user_id)
@@ -24,7 +24,7 @@ RSpec.describe BillettoEvent, type: :model do
       described_class.downvote(event_id, user_id)
 
       published_events = event_store.read.stream(stream_name).to_a
-      
+
       expect(published_events.count).to eq(1)
       expect(published_events.first).to be_an_instance_of(EventDownvoted)
       expect(published_events.first.data).to eq(event_id: event_id, user_id: user_id)

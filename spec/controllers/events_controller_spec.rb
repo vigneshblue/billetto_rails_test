@@ -14,7 +14,7 @@ RSpec.describe "Events Management - Authenticated User", type: :request do
   before do
     # Bypass authentication filter globally for this controller spec
     allow_any_instance_of(EventsController).to receive(:require_clerk_session!).and_return(true)
-    
+
     # Inject current user hook configuration
     allow_any_instance_of(EventsController).to receive(:set_event_and_user) do |controller|
       controller.instance_variable_set(:@event, mock_event)
@@ -30,7 +30,7 @@ RSpec.describe "Events Management - Authenticated User", type: :request do
   describe 'GET /events' do
     before do
       pagy_double = double('Pagy', series_nav: '<!-- Mocked Pagy Navigation -->')
-      allow_any_instance_of(EventsController).to receive(:pagy).and_return([pagy_double, [mock_event]])
+      allow_any_instance_of(EventsController).to receive(:pagy).and_return([ pagy_double, [ mock_event ] ])
     end
 
     it 'renders the index page successfully' do

@@ -1,5 +1,5 @@
 class ClerkController < ApplicationController
-  before_action :redirect_if_signed_in, only: [:sign_up, :sign_in]
+  before_action :redirect_if_signed_in, only: [ :sign_up, :sign_in ]
 
   def sign_up
   end

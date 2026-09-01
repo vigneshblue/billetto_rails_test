@@ -11,7 +11,7 @@ RSpec.describe "Authentication", type: :system do
       click_on "Sign up"
 
       expect(page).to have_css('.cl-signUp-root', wait: 5)
-      expect(page).to have_content("Create your account") 
+      expect(page).to have_content("Create your account")
     end
 
     it "successfully loads the sign_in page" do
@@ -19,7 +19,7 @@ RSpec.describe "Authentication", type: :system do
       click_on "Sign in"
 
       expect(page).to have_css('.cl-signIn-root', wait: 5)
-      expect(page).to have_content("Sign in to billetto_rails_test") 
+      expect(page).to have_content("Sign in to billetto_rails_test")
     end
   end
 
@@ -27,7 +27,7 @@ RSpec.describe "Authentication", type: :system do
     it "successfully sign out on clicking sign out" do
       visit "/sign_in"
 
-      expect(page).to have_content("Sign in to billetto_rails_test", wait: 5) 
+      expect(page).to have_content("Sign in to billetto_rails_test", wait: 5)
       fill_in 'identifier', with: ENV["CLERK_TEST_USER"]
       click_on 'Continue'
 

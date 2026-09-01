@@ -1,18 +1,18 @@
 class BillettoEvent
-  def initialize event_id, user_id=nil
+  def initialize(event_id, user_id = nil)
     @event_id = event_id
     @user_id = user_id
   end
 
-  def self.upvote event_id, user_id
+  def self.upvote(event_id, user_id)
     new(event_id, user_id).upvote
   end
 
-  def self.downvote event_id, user_id
+  def self.downvote(event_id, user_id)
     new(event_id, user_id).downvote
   end
 
-  def self.votes_count event_id
+  def self.votes_count(event_id)
     new(event_id).votes_count
   end
 
@@ -41,7 +41,7 @@ class BillettoEvent
 
     upvotes = votes.values.count(:up)
     downvotes = votes.values.count(:down)
-    { upvotes:, downvotes:}
+    { upvotes:, downvotes: }
   end
 
   private

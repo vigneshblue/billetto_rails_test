@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe SyncEventsJob, type: :job do
   describe '#perform' do
-    let(:page_1_events) { [{ 'id' => 121212, 'title' => 'Opening Ceremony' }] }
-    let(:page_2_events) { [{ 'id' => 212121, 'title' => 'Main Concert' }] }
+    let(:page_1_events) { [ { 'id' => 121212, 'title' => 'Opening Ceremony' } ] }
+    let(:page_2_events) { [ { 'id' => 212121, 'title' => 'Main Concert' } ] }
 
     before do
       allow(Rails.logger).to receive(:info)
@@ -14,8 +14,8 @@ RSpec.describe SyncEventsJob, type: :job do
       before do
         # Simulates 2 pages: first returns has_more: true, second returns has_more: false
         allow(Billetto::Client).to receive(:list_public_events).and_return(
-          [page_1_events, true],
-          [page_2_events, false]
+          [ page_1_events, true ],
+          [ page_2_events, false ]
         )
       end
 
@@ -35,7 +35,7 @@ RSpec.describe SyncEventsJob, type: :job do
 
     context 'when the API returns an empty event array' do
       before do
-        allow(Billetto::Client).to receive(:list_public_events).and_return([[], true])
+        allow(Billetto::Client).to receive(:list_public_events).and_return([ [], true ])
       end
 
       it 'safely hits the circuit breaker and stops execution immediately' do

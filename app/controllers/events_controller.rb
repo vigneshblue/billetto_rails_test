@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
-  before_action :require_clerk_session!, except: [:index]
-  before_action :set_event_and_user, only: [:upvote, :downvote]
+  before_action :require_clerk_session!, except: [ :index ]
+  before_action :set_event_and_user, only: [ :upvote, :downvote ]
 
   def index
     @pagy, @events = pagy(:offset, Event.all.ordered)
@@ -9,7 +9,7 @@ class EventsController < ApplicationController
   def upvote
     BillettoEvent.upvote(@event_id, @user_id)
 
-    redirect_back fallback_location: root_path, notice: "Upvoted successfully!"    
+    redirect_back fallback_location: root_path, notice: "Upvoted successfully!"
   end
 
   def downvote
