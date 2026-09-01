@@ -27,6 +27,31 @@ https://billetto-rails-test.onrender.com/
 - ActiveJob
 - Solid Queue
 
+## Design Choices & Assumptions
+
+- **External API integration:** Billetto API communication is isolated under `app/integrations/billetto`. The integration is split into separate `Client` and `Events` classes to keep responsibilities separate and make it easier to extend for future APIs.
+
+- **Event creation and updates:** The application creates local events based on the events returned by the Billetto API. During recurring synchronization, only new events are created; existing events are not updated. This assumes that the API response provides the events that need to be synchronized and that updating existing events is not required for the scope of this assignment.
+
+- **Domains:** `app/domains/billetto_event.rb` contains the domain logic related to voting and Rails Event Store interactions, keeping event-store logic separate from controllers.
+
+- **Event handlers:** `app/events` contains event handlers for processing domain events in a dedicated location.
+
+- **Background jobs:** I chose ActiveJob with Solid Queue because it is included with Rails and avoids introducing an additional dependency such as Redis for background job processing.
+
+- **Clerk sign-in/sign-up:** I used Clerk's mountable components instead of redirecting users directly to Clerk's hosted URLs, which gives the application more control over the authentication UI.
+
+- **Vote count calculation:** Vote counts are calculated by replaying the event stream rather than maintaining persisted counters. This keeps the event stream as the single source of truth and avoids having to keep a separate counter in sync with the events. I considered this approach sufficient for the scope of this project. The trade-off is that replaying events can become more expensive as the number of events grows or under higher traffic. At larger scale, this could be addressed using read models or projections.
+
+- **Testing:** I chose RSpec instead of Minitest because I find RSpec's descriptive syntax easier to read and understand, particularly for request and system tests.
+
+- **Event identity:** I assume each Billetto event has a unique `event_id`, which is used to identify and persist events locally.
+
+- **Vote behavior:** I assume a user can have only one effective vote per event. If a user votes again, their latest vote determines their current vote. Changing from an upvote to a downvote, or vice versa, changes the effective vote rather than counting both votes.
+
+- **Pagination:** Events are paginated to avoid loading the entire event collection into memory and to keep the listing responsive as the number of events grows.
+
+
 ## Requirements
 
 - Ruby [4.0.6]
